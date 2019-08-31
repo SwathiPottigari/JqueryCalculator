@@ -100,43 +100,27 @@
       $(".number").click(function () {
         if ($("#result").text() !== '') {
           reset();
-        }        
-          if ($("#operator").text() === '') {
-            var fval = $(this).attr("value");
-            fnumber = fnumber + fval;
-            $("#first-number").text(fnumber);
-          }
-          else {
-            var sval = $(this).attr("value");
-            snumber = snumber + sval;
-            $("#second-number").text(snumber);
-          }
-        
+        }
+        if ($("#operator").text() === '') {
+          fnumber = fnumber + $(this).val();
+          $("#first-number").text(fnumber);
+        }
+        else {
+          snumber = snumber + $(this).val();
+          $("#second-number").text(snumber);
+        }
       }
       );
 
-      $(".operator").click(function () {
+      $(".operator").click(function (event) {
+        if (!event.currentTarget.tagName.toLowerCase() === "button") return;
+
         operator = $(this).val();
         if ($("#first-number").text() === '') {
           alert("Please enter the number first");
         }
         else {
-          if (operator === 'plus') {
-            $("#operator").text($(this).text());
-          }
-          else if (operator === 'minus') {
-            $("#operator").text('-');
-          }
-          else if (operator === 'times') {
-            $("#operator").text('*');
-          }
-          else if (operator === 'divide') {
-            $("#operator").text('/');
-          }
-          else {
-            $("#operator").text('^');
-          }
-
+          $("#operator").text($(this).text());
         }
       }
       );
@@ -157,11 +141,7 @@
           result = num1 / num2;
         }
         else {
-          var num = 1;
-          for (let i = 1; i <= num2; i++) {
-            num = num * num1;
-          }
-          result = num;
+          result = Math.pow(num1, num2);
         }
 
         $("#result").text(result);
@@ -174,6 +154,7 @@
       function reset() {
         fnumber = '';
         snumber = '';
+        result='';
         $("#first-number").text('');
         $("#second-number").text('');
         $("#result").text('');
