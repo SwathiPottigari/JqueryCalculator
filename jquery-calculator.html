@@ -101,20 +101,30 @@
         if ($("#result").text() !== '') {
           reset();
         }
-        if ($("#operator").text() === '') {
-          fnumber = fnumber + $(this).val();
-          $("#first-number").text(fnumber);
-        }
         else {
-          snumber = snumber + $(this).val();
-          $("#second-number").text(snumber);
+          if ($("#operator").text() === '') {
+            fnumber = fnumber + $(this).val();
+            $("#first-number").text(fnumber);
+          }
+          else {
+            snumber = snumber + $(this).val();
+            $("#second-number").text(snumber);
+          }
         }
       }
       );
 
       $(".operator").click(function (event) {
         if (!event.currentTarget.tagName.toLowerCase() === "button") return;
-
+       if($("#result").text()!=='') {
+        $("#first-number").text(result);
+        $("#second-number").text('');
+        $("#result").text('');
+        fnumber=result;
+        snumber = '';
+        result = '';
+        
+        }
         operator = $(this).val();
         if ($("#first-number").text() === '') {
           alert("Please enter the number first");
@@ -128,6 +138,12 @@
       $("#button-equal").click(function () {
         var num1 = parseFloat(fnumber);
         var num2 = parseFloat(snumber);
+        if($("#second-number").text()==='')
+        {
+          result=num1;         
+        }
+        else
+        {
         if (operator === 'plus') {
           result = num1 + num2;
         }
@@ -142,10 +158,10 @@
         }
         else {
           result = Math.pow(num1, num2);
-        }
-
-        $("#result").text(result);
-      });
+        }       
+      }
+      $("#result").text(result);
+    } );
 
       $("#button-clear").click(function () {
         reset();
@@ -154,7 +170,7 @@
       function reset() {
         fnumber = '';
         snumber = '';
-        result='';
+        result = '';
         $("#first-number").text('');
         $("#second-number").text('');
         $("#result").text('');
